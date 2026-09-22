@@ -37,6 +37,7 @@ export default function Navbar() {
       children: [
         { name: 'Content Hub', path: '/hub' },
         { name: 'Learnership Opportunities', path: '/opportunities' },
+        { name: 'Learner Portal', path: '/learner-portal' },
         { name: 'News', path: '/news' },
         { name: 'Blog', path: '/blog' },
       ],
@@ -55,7 +56,7 @@ export default function Navbar() {
     { name: 'Contact', path: '/contact' },
   ];
 
-  // Close dropdown when clicking outside
+
   useEffect(() => {
     function handleClickOutside(e) {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -66,7 +67,7 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close menus on route change
+
   useEffect(() => {
     setIsOpen(false);
     setOpenDropdown(null);
@@ -115,24 +116,21 @@ export default function Navbar() {
               >
                 {link.children ? (
                   <button
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap ${
-                      isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
-                    }`}
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap ${isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
+                      }`}
                   >
                     {link.name}
                     <ChevronDown
                       size={14}
-                      className={`transition-transform ${
-                        openDropdown === link.name ? 'rotate-180' : ''
-                      }`}
+                      className={`transition-transform ${openDropdown === link.name ? 'rotate-180' : ''
+                        }`}
                     />
                   </button>
                 ) : (
                   <Link
                     to={link.path}
-                    className={`block px-3 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap ${
-                      isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
-                    }`}
+                    className={`block px-3 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap ${isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
+                      }`}
                   >
                     {link.name}
                   </Link>
@@ -146,11 +144,10 @@ export default function Navbar() {
                         <Link
                           key={child.name}
                           to={child.path}
-                          className={`block px-4 py-2 text-sm transition-colors ${
-                            location.pathname === child.path
+                          className={`block px-4 py-2 text-sm transition-colors ${location.pathname === child.path
                               ? 'bg-red-50 text-[#E30613] font-medium'
                               : 'text-gray-700 hover:bg-gray-50 hover:text-[#E30613]'
-                          }`}
+                            }`}
                         >
                           {child.name}
                         </Link>
@@ -189,16 +186,14 @@ export default function Navbar() {
                     onClick={() =>
                       setOpenDropdown(openDropdown === link.name ? null : link.name)
                     }
-                    className={`flex items-center justify-between w-full px-4 py-3 rounded-md text-base font-medium ${
-                      isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className={`flex items-center justify-between w-full px-4 py-3 rounded-md text-base font-medium ${isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
+                      }`}
                   >
                     {link.name}
                     <ChevronDown
                       size={16}
-                      className={`transition-transform ${
-                        openDropdown === link.name ? 'rotate-180' : ''
-                      }`}
+                      className={`transition-transform ${openDropdown === link.name ? 'rotate-180' : ''
+                        }`}
                     />
                   </button>
                   {openDropdown === link.name && (
@@ -207,11 +202,10 @@ export default function Navbar() {
                         <Link
                           key={child.name}
                           to={child.path}
-                          className={`block px-4 py-2 rounded-md text-sm ${
-                            location.pathname === child.path
+                          className={`block px-4 py-2 rounded-md text-sm ${location.pathname === child.path
                               ? 'bg-red-50 text-[#E30613] font-medium'
                               : 'text-gray-600 hover:bg-gray-50'
-                          }`}
+                            }`}
                         >
                           {child.name}
                         </Link>
@@ -222,9 +216,8 @@ export default function Navbar() {
               ) : (
                 <Link
                   to={link.path}
-                  className={`block px-4 py-3 rounded-md text-base font-medium ${
-                    isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
-                  }`}
+                  className={`block px-4 py-3 rounded-md text-base font-medium ${isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
+                    }`}
                 >
                   {link.name}
                 </Link>

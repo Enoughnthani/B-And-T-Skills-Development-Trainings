@@ -23,6 +23,7 @@ import NewsDetail from './pages/NewsDetail';
 import BlogList from './pages/BlogList';
 import BlogDetail from './pages/BlogDetail';
 import AdminPanel from './pages/admin/AdminPanel';
+import LearnerPortal from './pages/LearnerPortal';
 
 export default function App() {
   return (
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="blog" element={<BlogList />} />
           <Route path="blog/:id" element={<BlogDetail />} />
           <Route path="admin" element={<AdminPanel />} />
+          <Route path="learner-portal" element={<LearnerPortal />} />
         </Route>
       </Routes>
     </Router>
