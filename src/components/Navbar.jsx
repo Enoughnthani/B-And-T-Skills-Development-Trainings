@@ -45,6 +45,16 @@ export default function Navbar() {
       ],
     },
     { name: 'Contact', path: '/contact' },
+    {
+      name: 'Content',
+      path: '/hub',
+      children: [
+        { name: 'Content Hub', path: '/hub' },
+        { name: 'Learnership Opportunities', path: '/opportunities' },
+        { name: 'News', path: '/news' },
+        { name: 'Blog', path: '/blog' },
+      ],
+    },
   ];
 
 
@@ -125,8 +135,8 @@ export default function Navbar() {
                           key={child.name}
                           to={child.path}
                           className={`block px-4 py-2 text-sm transition-colors ${location.pathname === child.path
-                              ? 'bg-red-50 text-[#E30613] font-medium'
-                              : 'text-gray-700 hover:bg-gray-50 hover:text-[#E30613]'
+                            ? 'bg-red-50 text-[#E30613] font-medium'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-[#E30613]'
                             }`}
                         >
                           {child.name}

@@ -15,6 +15,14 @@ import Procurement from './pages/Procurement';
 import Industries from './pages/Industries';
 import OurDifference from './pages/OurDifference';
 import Contact from './pages/Contact';
+import ContentHub from './pages/ContentHub';
+import LearnershipListings from './pages/LearnershipListings';
+import LearnershipDetail from './pages/LearnershipDetail';
+import NewsList from './pages/NewsList';
+import NewsDetail from './pages/NewsDetail';
+import BlogList from './pages/BlogList';
+import BlogDetail from './pages/BlogDetail';
+import AdminPanel from './pages/admin/AdminPanel';
 
 export default function App() {
   return (
@@ -35,6 +43,14 @@ export default function App() {
           <Route path="industries" element={<Industries />} />
           <Route path="our-difference" element={<OurDifference />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="hub" element={<ContentHub />} />
+          <Route path="opportunities" element={<LearnershipListings />} />
+          <Route path="opportunities/:id" element={<LearnershipDetail />} />
+          <Route path="news" element={<NewsList />} />
+          <Route path="news/:id" element={<NewsDetail />} />
+          <Route path="blog" element={<BlogList />} />
+          <Route path="blog/:id" element={<BlogDetail />} />
+          <Route path="admin" element={<AdminPanel />} />
         </Route>
       </Routes>
     </Router>
