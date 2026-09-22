@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const location = useLocation();
   const navRef = useRef(null);
+  const closeTimer = useRef(null);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -15,7 +16,6 @@ export default function Navbar() {
       path: '/about',
       children: [
         { name: 'About Us', path: '/about' },
-        { name: 'Why B and T', path: '/about#why' },
         { name: 'Our Difference', path: '/our-difference' },
         { name: 'National Footprint', path: '/footprint' },
       ],
@@ -28,23 +28,9 @@ export default function Navbar() {
         { name: 'Corporate Training', path: '/corporate-training' },
         { name: 'Occupational Training', path: '/occupational-training' },
         { name: 'Learnerships', path: '/learnerships' },
-        { name: 'Workplace Learning', path: '/corporate-training' },
         { name: 'Youth Development', path: '/learnerships' },
       ],
     },
-    { name: 'B-BBEE Solutions', path: '/bbbee' },
-    { name: 'Learnerships', path: '/learnerships' },
-    {
-      name: 'For Business',
-      path: '#',
-      children: [
-        { name: 'HR & SDF Managers', path: '/hr-managers' },
-        { name: 'Procurement', path: '/procurement' },
-        { name: 'B-BBEE Partnerships', path: '/partnerships' },
-        { name: 'Industries', path: '/industries' },
-      ],
-    },
-    { name: 'Contact', path: '/contact' },
     {
       name: 'Content',
       path: '/hub',
@@ -55,9 +41,21 @@ export default function Navbar() {
         { name: 'Blog', path: '/blog' },
       ],
     },
+    {
+      name: 'Business',
+      path: '#',
+      children: [
+        { name: 'HR & SDF Managers', path: '/hr-managers' },
+        { name: 'Procurement', path: '/procurement' },
+        { name: 'B-BBEE Partnerships', path: '/partnerships' },
+        { name: 'Industries', path: '/industries' },
+      ],
+    },
+    { name: 'B-BBEE Solutions', path: '/bbbee' },
+    { name: 'Contact', path: '/contact' },
   ];
 
-
+  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(e) {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -68,11 +66,22 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-
+  // Close menus on route change
   useEffect(() => {
     setIsOpen(false);
     setOpenDropdown(null);
   }, [location.pathname]);
+
+  const handleMouseEnter = (name) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150);
+  };
 
   const isActive = (link) => {
     if (link.path === location.pathname) return true;
@@ -85,59 +94,63 @@ export default function Navbar() {
   return (
     <nav ref={navRef} className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-20 gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
             <div className="bg-black text-white font-bold text-2xl px-2 py-1 rounded-sm">B&T</div>
-            <div className="flex flex-col leading-tight">
+            <div className="hidden sm:flex flex-col leading-tight">
               <span className="text-[#E30613] font-bold text-sm tracking-wider">SKILLS DEVELOPMENT</span>
               <span className="text-black font-bold text-xs tracking-wider">TRAININGS</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center gap-1 flex-1 justify-end">
             {navLinks.map((link) => (
               <div
                 key={link.name}
                 className="relative"
-                onMouseEnter={() => link.children && setOpenDropdown(link.name)}
-                onMouseLeave={() => link.children && setOpenDropdown(null)}
+                onMouseEnter={() => link.children && handleMouseEnter(link.name)}
+                onMouseLeave={() => link.children && handleMouseLeave()}
               >
                 {link.children ? (
                   <button
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-md ${isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
-                      }`}
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap ${
+                      isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
+                    }`}
                   >
                     {link.name}
                     <ChevronDown
                       size={14}
-                      className={`transition-transform ${openDropdown === link.name ? 'rotate-180' : ''
-                        }`}
+                      className={`transition-transform ${
+                        openDropdown === link.name ? 'rotate-180' : ''
+                      }`}
                     />
                   </button>
                 ) : (
                   <Link
                     to={link.path}
-                    className={`block px-3 py-2 text-sm font-medium transition-colors rounded-md ${isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
-                      }`}
+                    className={`block px-3 py-2 text-sm font-medium transition-colors rounded-md whitespace-nowrap ${
+                      isActive(link) ? 'text-[#E30613]' : 'text-gray-600 hover:text-[#E30613]'
+                    }`}
                   >
                     {link.name}
                   </Link>
                 )}
 
-                {/* Dropdown */}
+                {/* Dropdown with invisible hover bridge */}
                 {link.children && openDropdown === link.name && (
-                  <div className="absolute top-full left-0 pt-2 z-50">
+                  <div className="absolute top-full right-0 pt-2 z-50">
                     <div className="w-64 bg-white border border-gray-100 rounded-lg shadow-lg py-2">
                       {link.children.map((child) => (
                         <Link
                           key={child.name}
                           to={child.path}
-                          className={`block px-4 py-2 text-sm transition-colors ${location.pathname === child.path
-                            ? 'bg-red-50 text-[#E30613] font-medium'
-                            : 'text-gray-700 hover:bg-gray-50 hover:text-[#E30613]'
-                            }`}
+                          className={`block px-4 py-2 text-sm transition-colors ${
+                            location.pathname === child.path
+                              ? 'bg-red-50 text-[#E30613] font-medium'
+                              : 'text-gray-700 hover:bg-gray-50 hover:text-[#E30613]'
+                          }`}
                         >
                           {child.name}
                         </Link>
@@ -150,7 +163,7 @@ export default function Navbar() {
 
             <Link
               to="/contact"
-              className="ml-3 bg-[#E30613] text-white font-bold text-sm px-5 py-2 rounded-md hover:bg-red-700 transition-colors"
+              className="ml-3 bg-[#E30613] text-white font-bold text-sm px-5 py-2.5 rounded-md hover:bg-red-700 transition-colors whitespace-nowrap"
             >
               REQUEST PROPOSAL
             </Link>
@@ -176,14 +189,16 @@ export default function Navbar() {
                     onClick={() =>
                       setOpenDropdown(openDropdown === link.name ? null : link.name)
                     }
-                    className={`flex items-center justify-between w-full px-4 py-3 rounded-md text-base font-medium ${isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
-                      }`}
+                    className={`flex items-center justify-between w-full px-4 py-3 rounded-md text-base font-medium ${
+                      isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
+                    }`}
                   >
                     {link.name}
                     <ChevronDown
                       size={16}
-                      className={`transition-transform ${openDropdown === link.name ? 'rotate-180' : ''
-                        }`}
+                      className={`transition-transform ${
+                        openDropdown === link.name ? 'rotate-180' : ''
+                      }`}
                     />
                   </button>
                   {openDropdown === link.name && (
@@ -192,10 +207,11 @@ export default function Navbar() {
                         <Link
                           key={child.name}
                           to={child.path}
-                          className={`block px-4 py-2 rounded-md text-sm ${location.pathname === child.path
-                            ? 'bg-red-50 text-[#E30613] font-medium'
-                            : 'text-gray-600 hover:bg-gray-50'
-                            }`}
+                          className={`block px-4 py-2 rounded-md text-sm ${
+                            location.pathname === child.path
+                              ? 'bg-red-50 text-[#E30613] font-medium'
+                              : 'text-gray-600 hover:bg-gray-50'
+                          }`}
                         >
                           {child.name}
                         </Link>
@@ -206,8 +222,9 @@ export default function Navbar() {
               ) : (
                 <Link
                   to={link.path}
-                  className={`block px-4 py-3 rounded-md text-base font-medium ${isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
-                    }`}
+                  className={`block px-4 py-3 rounded-md text-base font-medium ${
+                    isActive(link) ? 'bg-red-50 text-[#E30613]' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
                 >
                   {link.name}
                 </Link>
