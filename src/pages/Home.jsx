@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div>
       <section className="relative bg-white">
-        <div className="bg-[#E30613] text-white text-center py-2 text-sm font-medium">
+        <div className="bg-zinc-800 text-white text-center py-2 text-sm font-medium">
           Developing People. Strengthening Businesses. Creating Opportunities.
         </div>
 

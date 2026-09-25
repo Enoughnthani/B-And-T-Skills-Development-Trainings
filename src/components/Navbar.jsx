@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
+import logo from "../assets/logo.png"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,15 +95,11 @@ export default function Navbar() {
 
   return (
     <nav ref={navRef} className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="bg-black text-white font-bold text-2xl px-2 py-1 rounded-sm">B&T</div>
-            <div className="hidden sm:flex flex-col leading-tight">
-              <span className="text-[#E30613] font-bold text-sm tracking-wider">SKILLS DEVELOPMENT</span>
-              <span className="text-black font-bold text-xs tracking-wider">TRAININGS</span>
-            </div>
+            <img src={logo}/>
           </Link>
 
           {/* Desktop Nav */}
@@ -160,7 +157,7 @@ export default function Navbar() {
 
             <Link
               to="/contact"
-              className="ml-3 bg-[#E30613] text-white font-bold text-sm px-5 py-2.5 rounded-md hover:bg-red-700 transition-colors whitespace-nowrap"
+              className="ml-3 bg-zinc-800 text-white font-bold text-sm px-5 py-2.5 rounded-md hover:bg-zinc-900 transition-colors whitespace-nowrap"
             >
               REQUEST PROPOSAL
             </Link>
@@ -227,7 +224,7 @@ export default function Navbar() {
 
           <Link
             to="/contact"
-            className="block mt-4 text-center bg-[#E30613] text-white font-bold px-5 py-3 rounded-md hover:bg-red-700 transition-colors"
+            className="block mt-4 text-center bg-zinc-800 text-white font-bold px-5 py-3 rounded-md  transition-colors"
           >
             REQUEST PROPOSAL
           </Link>
